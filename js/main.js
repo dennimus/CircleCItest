@@ -9,6 +9,9 @@ function init() {
     //getDataFromJSON();
 }
 var deckID = null;
+var value = 'ACE';
+var option = '1,2'; 
+
 document.getElementById("deck").addEventListener("click", generateDeck);
 
 function generateDeck(){
@@ -44,3 +47,17 @@ function displayCards(cards){
     document.getElementById("cards").appendChild(newCard);
   }
 }
+
+
+if  (value == 'KING'|| value == 'QUEEN'|| value == 'JACK'){
+    value = 10;
+} else {
+    value = value;
+}
+
+if (value == 'ACE'){
+    value = document.getElementById("mySelect").selectedIndex;
+    alert(document.getElementsByTagName("option")[value].value);
+
+}
+console.log(value);
