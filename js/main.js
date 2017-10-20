@@ -6,12 +6,15 @@ window.addEventListener("load", init);
  */
 function init() {
     // addElement();
-    getDataFromJSON();
+    //getDataFromJSON();
 }
+var deckID = null;
+document.getElementById("deck").addEventListener("click", generateDeck);
 
-function getDataFromJSON(){
+function generateDeck(){
 $.getJSON("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
 .done(function(resultData){
+    deckID = resultData.deck_id;
     console.log(resultData)
     drawCards();
 })
@@ -22,12 +25,22 @@ $.getJSON("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
 }
 
 function drawCards(){
-    $.getJSON("https://deckofcardsapi.com/api/deck/far2jvaoahuu/draw/?count=2")
+    $.getJSON("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=2")
     .done(function(resultData){
         console.log(resultData)
+        displayCards(resultData.cards);
+
     })
     .fail(function(){
         console.log("failed");
     }
     ); 
+}
+function displayCards(cards){
+  var j = cards.length;
+  for( var i = 0; i<j; i++){
+    var newCard = document.createElement("img"); 
+    newCard.setAttribute("src", cards[i].image);
+    document.getElementById("cards").appendChild(newCard);
+  }
 }
