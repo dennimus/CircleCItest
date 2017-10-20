@@ -12,40 +12,50 @@ var deckID = null;
 var value = 'ACE';
 
 document.getElementById("deck").addEventListener("click", generateDeck);
+document.getElementById("hit").addEventListener("click", hitCard);
 
 function generateDeck(){
-$.getJSON("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
-.done(function(resultData){
-    deckID = resultData.deck_id;
-    console.log(resultData)
-    drawCards();
-})
-.fail(function(){
-    console.log("failed");
-}); 
+    $.getJSON("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
+        .done(function(resultData){
+            deckID = resultData.deck_id;
+            console.log(resultData)
+            drawCards();
+        })
+        .fail(function(){
+            console.log("failed");
+        }); 
+}
+
+function hitCard(){
+    $.getJSON("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=1")
+        .done(function(resultData){
+            console.log(resultData)
+            displayCards(resultData.cards);
+        })
+        .fail(function(){
+            console.log("failed");
+        }); 
 }
 
 function drawCards(){
     $.getJSON("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=2")
-    .done(function(resultData){
-        console.log(resultData)
-        displayCards(resultData.cards);
-
-    })
-    .fail(function(){
-        console.log("failed");
-    }
-    ); 
+        .done(function(resultData){
+            console.log(resultData)
+            displayCards(resultData.cards);
+        })
+        .fail(function(){
+            console.log("failed");
+        }); 
 }
+
 function displayCards(cards){
-  var j = cards.length;
-  for( var i = 0; i<j; i++){
-    var newCard = document.createElement("img"); 
-    newCard.setAttribute("src", cards[i].image);
-    document.getElementById("cards").appendChild(newCard);
-  }
+    var j = cards.length;
+    for( var i = 0; i<j; i++){
+        var newCard = document.createElement("img"); 
+        newCard.setAttribute("src", cards[i].image);
+        document.getElementById("cards").appendChild(newCard);
+    }
 }
-
 
 if  (value == 'KING'|| value == 'QUEEN'|| value == 'JACK'){
     value = 10;
