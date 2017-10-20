@@ -10,7 +10,6 @@ function init() {
 }
 var deckID = null;
 var value = 'ACE';
-var option = '1,2'; 
 
 document.getElementById("deck").addEventListener("click", generateDeck);
 
@@ -23,8 +22,7 @@ $.getJSON("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
 })
 .fail(function(){
     console.log("failed");
-}
-); 
+}); 
 }
 
 function drawCards(){
@@ -51,13 +49,17 @@ function displayCards(cards){
 
 if  (value == 'KING'|| value == 'QUEEN'|| value == 'JACK'){
     value = 10;
+    console.log(value);
+} else  if (value == 'ACE'){
+    document.getElementById("one").addEventListener("click", function one(value){
+        value = 1;
+        console.log(value);
+    });
+    document.getElementById("eleven").addEventListener("click", function eleven(value){
+        value = 11;
+        console.log(value);
+    });
 } else {
     value = value;
+    console.log(value);
 }
-
-if (value == 'ACE'){
-    value = document.getElementById("mySelect").selectedIndex;
-    alert(document.getElementsByTagName("option")[value].value);
-
-}
-console.log(value);
