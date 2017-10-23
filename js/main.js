@@ -42,7 +42,12 @@ function hitCard(){
         .done(function(resultData){
             console.log(resultData);
             displayCards(resultData.cards);
+<<<<<<< Updated upstream
             checkValues(playerCards);   
+=======
+            checkValues();
+            uitslag();
+>>>>>>> Stashed changes
             console.log(playerCards);
 
             
@@ -169,15 +174,26 @@ function uitslag(){
     console.log(dealerScore);
     if((playerScore == 21 && playerScore != dealerScore)||(playerScore>dealerScore && playerScore<22)||(dealerScore>22 && playerScore<22)){
         window.alert("Je hebt gewonnen");
+        location.reload();
     }
     else if (playerScore > 21 || (playerScore < dealerScore)&& dealerScore < 22){
         window.alert("Je hebt verloren");
+        location.reload();
     } 
     else if (playerScore==dealerScore){
         window.alert("gelijkspel");
+<<<<<<< Updated upstream
     } else {
         window.alert("error");
     }
 
 }
 
+=======
+        location.reload();
+    }
+    if (dealerScore<playerScore && dealerScore<21){
+
+    }
+}
+>>>>>>> Stashed changes
