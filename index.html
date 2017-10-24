@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Blackjack</title>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    
 </head>
 
 <body>
@@ -13,20 +12,20 @@
         <h1>Blackjack</h1>
         
         <div class="main">
-
-        <div class="main-buttons">
-            <p><Button type= "button" class= "button" id= "deck">Start game</Button></p>
-            <p><Button type= "button" class= "button" id= "hit">Hit me</Button></p>
-            <p><Button type= "button" class= "button" id= "uitslag">Final score</Button></p>
+            <div class="main-buttons">
+                <p><Button type= "button" class= "button" id= "deck">Start game</Button></p>
+                <p><Button type= "button" class= "button" id= "hit">Hit me</Button></p>
+                <p><Button type= "button" class= "button" id= "uitslag">Final score</Button></p>
+            </div>
+            <div id="dealer">
+                <h3>Dealer's hand</h3>
+            </div>
         </div>
-        
-            <div id="dealer"><h3>Dealer's hand</h3></div>
-        </div>
-        
         <div id="cards" >
             <h3>Your hand</h3>
         </div>
         <div class="ace-buttons">
+            <h3>what is the value of your ace?</h3>
             <h2><button type= "button" class= "buttonAce" id= "one">One</button>
             or
             <button type= "button" class= "buttonAce" id= "eleven">Eleven</button></h2>
