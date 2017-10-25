@@ -189,7 +189,7 @@ function score() {
     for (var i = 0; i < dealLength; i++) {
         dealerScore = dealerScore + parseInt(dealerCards[i]);
     }
-    if (dealerScore < 17) {
+    if (dealerScore <= 16) {
         hitDealer();
     }
     console.log(playerScore);
@@ -210,13 +210,13 @@ function uitslag() {
         console.log(scoreplayer);
         
     }
-    else if (playerScore > 21 || (playerScore < dealerScore)&& dealerScore < 22){
+    else if (playerScore > 21 && dealerScore<22 || (playerScore < dealerScore)&& dealerScore < 22){
         window.alert("You lost!");
         scoreplayer -=100;
         console.log(scoreplayer);
         
     } 
-    else if (playerScore==dealerScore){
+    else if (playerScore==dealerScore || playerScore >21 && dealerScore >21){
         window.alert("Draw!");
         console.log(scoreplayer);
         
