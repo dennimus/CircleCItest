@@ -23,12 +23,12 @@ if (scoreplayer == null){
 } 
 
 
-document.getElementById("score").innerHTML = "Your score is: " + scoreplayer;
+document.getElementById("score").innerHTML = "Your score is: $" + scoreplayer;
 //button interactions
 document.getElementById("deck").addEventListener("click", generateDeck);
 document.getElementById("hit").addEventListener("click", hitCard);
-document.getElementById("uitslag").addEventListener("click", uitslag);
-
+document.getElementById("scores").addEventListener("click", scores);
+document.getElementById("reset").addEventListener("click", reset);
 // AJAX functions
 //initializing function for the deck of cards
 function generateDeck() {
@@ -196,7 +196,7 @@ function score() {
     console.log(dealerScore);
 }
 // function for the result
-function uitslag() {
+function scores() {
     playerScore = 0;
     dealerScore = 0;
 
@@ -227,5 +227,9 @@ function uitslag() {
 
 }
 function endgame(){
+    location.reload();
+}
+function reset(){
+    localStorage.setItem("scoreplayer",1000);
     location.reload();
 }
