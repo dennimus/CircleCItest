@@ -22,7 +22,6 @@ if (scoreplayer == null){
     var scoreplayer = 1000;
 } 
 
-
 document.getElementById("score").innerHTML = "Your score is: $" + scoreplayer;
 //button interactions
 document.getElementById("deck").addEventListener("click", generateDeck);
@@ -35,7 +34,7 @@ function generateDeck() {
     $.getJSON("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6")
         .done(function (resultData) {
             deckID = resultData.deck_id;
-            console.log(resultData);
+            // console.log(resultData);
             drawDealer();
             drawCards();
         })
@@ -48,11 +47,11 @@ function generateDeck() {
 function drawDealer() {
     $.getJSON("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=2")
         .done(function (resultData) {
-            console.log(resultData);
+            // console.log(resultData);
             displayDealer(resultData.cards);
             checkValues(dealerCards);
             document.getElementById("dealer").style.visibility = "visible";
-            console.log(dealerCards);
+            // console.log(dealerCards);
         })
         .fail(function () {
             console.log("failed");
@@ -62,10 +61,10 @@ function drawDealer() {
 function hitDealer() {
     $.getJSON("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=1")
         .done(function (resultData) {
-            console.log(resultData);
+            // console.log(resultData);
             displayDealer(resultData.cards);
             checkValues(dealerCards);
-            console.log(dealerCards);
+            // console.log(dealerCards);
         })
         .fail(function () {
             console.log("failed");
@@ -76,12 +75,11 @@ function hitDealer() {
 function drawCards() {
     $.getJSON("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=2")
         .done(function (resultData) {
-            console.log(resultData);
+            // console.log(resultData);
             displayCards(resultData.cards);
             checkValues(playerCards);
             document.getElementById("cards").style.visibility = "visible";
-            console.log(playerCards);
-
+            // console.log(playerCards);
         })
         .fail(function () {
             console.log("failed");
@@ -91,12 +89,11 @@ function drawCards() {
 function hitCard() {
     $.getJSON("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=1")
         .done(function (resultData) {
-            console.log(resultData);
+            // console.log(resultData);
             displayCards(resultData.cards);
             checkValues(playerCards);
-            console.log(playerCards);
+            // console.log(playerCards);
             score();
-
         })
         .fail(function () {
             console.log("failed");
@@ -145,7 +142,6 @@ function checkValues(array) {
         // jacks/queens/kings get a value of 10
         if (array[i] == 'KING' || array[i] == 'QUEEN' || array[i] == 'JACK') {
             array[i] = 10;
-            console.log(array[i]);
         }
         //player has to choose the value of the ace to be 1 or 11 using 2 buttons
         else if (array[i] == 'ACE') {
@@ -156,8 +152,6 @@ function checkValues(array) {
                         array[i] = 1;
                 }
                 document.getElementById("aceButtons").style.visibility = "hidden";
-                console.log(array[i]);
-                console.log(array);
             });
             document.getElementById("eleven").addEventListener("click", function eleven() {
                 for (var i = 0; i < array.length; i++) {
@@ -165,8 +159,6 @@ function checkValues(array) {
                         array[i] = 11;
                 }
                 document.getElementById("aceButtons").style.visibility = "hidden";
-                console.log(array[i]);
-                console.log(playerCards);
             });
         }
         //changing the dealers ace values
@@ -192,43 +184,35 @@ function score() {
     if (dealerScore <= 16) {
         hitDealer();
     }
-    console.log(playerScore);
-    console.log(dealerScore);
+    // console.log(playerScore);
+    // console.log(dealerScore);
 }
 // function for the result
 function scores() {
     playerScore = 0;
     dealerScore = 0;
-
-
     score();
-    console.log(playerScore);
-    console.log(dealerScore);
+    // console.log(playerScore);
+    // console.log(dealerScore);
     if((playerScore == 21 && playerScore != dealerScore)||(playerScore>dealerScore && playerScore<22)||(dealerScore>22 && playerScore<22)){
         window.alert("You won!");
         scoreplayer -= -100;
-        console.log(scoreplayer);
-        
     }
     else if (playerScore > 21 && dealerScore<22 || (playerScore < dealerScore)&& dealerScore < 22){
         window.alert("You lost!");
         scoreplayer -=100;
-        console.log(scoreplayer);
-        
     } 
     else if (playerScore==dealerScore || playerScore >21 && dealerScore >21){
         window.alert("Draw!");
-        console.log(scoreplayer);
-        
     }
     localStorage.setItem("scoreplayer",scoreplayer);
-
     endgame();
-
 }
+//function to reload the page
 function endgame(){
     location.reload();
 }
+//function to reset the score and reload
 function reset(){
     localStorage.setItem("scoreplayer",1000);
     location.reload();
