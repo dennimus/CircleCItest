@@ -23,7 +23,7 @@ if (scoreplayer == null){
 } 
 
 
-document.getElementById("score").innerHTML = scoreplayer;
+document.getElementById("score").innerHTML = "Your score is: " + scoreplayer;
 //button interactions
 document.getElementById("deck").addEventListener("click", generateDeck);
 document.getElementById("hit").addEventListener("click", hitCard);
