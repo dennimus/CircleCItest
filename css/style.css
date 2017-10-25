@@ -9,7 +9,7 @@ body{
 h1{
     color: rgba(172, 5, 5, 0.92);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 4em;
+    font-size: 3em;
     text-align: center;
 }
 h2{
@@ -71,8 +71,8 @@ h4{
 
 /* cards for the dealer */
 #dealer{
-    margin: 0px;
-    width: 85%;
+    margin-left: 20%px;
+    width: 80%;
     text-align: center;
 }
 /* cards for the player */
