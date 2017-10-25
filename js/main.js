@@ -24,163 +24,179 @@ if (scoreplayer == null){
 
 
 document.getElementById("score").innerHTML = scoreplayer;
+//button interactions
 document.getElementById("deck").addEventListener("click", generateDeck);
 document.getElementById("hit").addEventListener("click", hitCard);
 document.getElementById("uitslag").addEventListener("click", uitslag);
 
-function generateDeck(){
+// AJAX functions
+//initializing function for the deck of cards
+function generateDeck() {
     $.getJSON("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6")
-        .done(function(resultData){
+        .done(function (resultData) {
             deckID = resultData.deck_id;
             console.log(resultData);
             drawDealer();
             drawCards();
-
-
         })
-        .fail(function(){
+        .fail(function () {
             console.log("failed");
-        }); 
+        });
 }
-function drawCards(){
+// scripts for dealer interactions
+// function to draw the dealer hand
+function drawDealer() {
     $.getJSON("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=2")
-        .done(function(resultData){
+        .done(function (resultData) {
             console.log(resultData);
-            displayCards(resultData.cards);
-            checkValues(playerCards);
-            console.log(playerCards);
-           
+            displayDealer(resultData.cards);
+            checkValues(dealerCards);
+            document.getElementById("dealer").style.visibility = "visible";
+            console.log(dealerCards);
         })
-        .fail(function(){
+        .fail(function () {
             console.log("failed");
-        }); 
+        });
 }
-
-function drawDealer(){
-    $.getJSON("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=2")
-    .done(function(resultData){
-        console.log(resultData);
-        displayDealer(resultData.cards);
-        checkValues(dealerCards);
-        console.log(dealerCards);
-    })
-    .fail(function(){
-        console.log("failed");
-    }); 
-}
-
-function hitCard(){
+//function ot draw extra dealer card
+function hitDealer() {
     $.getJSON("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=1")
-        .done(function(resultData){
-            console.log(resultData);
-            displayCards(resultData.cards);
-            checkValues(playerCards);
-            console.log(playerCards);
-            score();
-            
-        })
-        .fail(function(){
-            console.log("failed");
-        }); 
-}
-function hitDealer(){
-    $.getJSON("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=1")
-        .done(function(resultData){
+        .done(function (resultData) {
             console.log(resultData);
             displayDealer(resultData.cards);
             checkValues(dealerCards);
             console.log(dealerCards);
         })
-        .fail(function(){
+        .fail(function () {
             console.log("failed");
-        }); 
+        });
+}
+//scripts for player ineractions
+//funciton to draw the player's hand
+function drawCards() {
+    $.getJSON("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=2")
+        .done(function (resultData) {
+            console.log(resultData);
+            displayCards(resultData.cards);
+            checkValues(playerCards);
+            document.getElementById("cards").style.visibility = "visible";
+            console.log(playerCards);
+
+        })
+        .fail(function () {
+            console.log("failed");
+        });
+}
+// function to add an extra card for the player
+function hitCard() {
+    $.getJSON("https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=1")
+        .done(function (resultData) {
+            console.log(resultData);
+            displayCards(resultData.cards);
+            checkValues(playerCards);
+            console.log(playerCards);
+            score();
+
+        })
+        .fail(function () {
+            console.log("failed");
+        });
 }
 
 
-function displayCards(cards){
+//functions to display the cards on your screen using for loops and create element
+//player cards
+function displayCards(cards) {
     var j = cards.length;
-    for( var i = 0; i<j; i++){
+    for (var i = 0; i < j; i++) {
         playerCards[hitme] = cards[i].value;
-        var newCard = document.createElement("img"); 
+        var newCard = document.createElement("img");
         newCard.setAttribute("src", cards[i].image);
-        newCard.setAttribute("height","300px");
+        newCard.setAttribute("height", "300px");
         document.getElementById("cards").appendChild(newCard);
         hitme++;
     }
 }
-function displayDealer(cards){
+//dealer cards
+function displayDealer(cards) {
     var j = cards.length;
-    for( var i = 0; i<j; i++){
+    for (var i = 0; i < j; i++) {
         dealerCards[dealme] = cards[i].value;
-        if (dealme==0){
-            var newCard = document.createElement("img"); 
+        if (dealme == 0) {
+            var newCard = document.createElement("img");
             newCard.setAttribute("src", "../image/cardback.png");
-            newCard.setAttribute("height","250px");
-            newCard.setAttribute("width","200px");
+            newCard.setAttribute("height", "250px");
+            newCard.setAttribute("width", "200px");
             document.getElementById("dealer").appendChild(newCard);
             dealme++;
         } else {
-            var newCard = document.createElement("img"); 
+            var newCard = document.createElement("img");
             newCard.setAttribute("src", cards[i].image);
-            newCard.setAttribute("height","250px");
+            newCard.setAttribute("height", "250px");
             document.getElementById("dealer").appendChild(newCard);
             dealme++;
         }
     }
 }
-function checkValues(array){
+//funcitons that change the given values of jacks/queens/kings and aces
+function checkValues(array) {
     var k = array.length;
-    for(var i = 0; i<k; i++){
-        if  (array[i] == 'KING'|| array[i] == 'QUEEN'|| array[i] == 'JACK'){
+    for (var i = 0; i < k; i++) {
+        // jacks/queens/kings get a value of 10
+        if (array[i] == 'KING' || array[i] == 'QUEEN' || array[i] == 'JACK') {
             array[i] = 10;
             console.log(array[i]);
-        } else  if (array[i] == 'ACE'){
-            document.getElementById("one").addEventListener("click", function one(){
-                for (var i = 0; i < array.length; i++)
-                if (array[i] == 'ACE')
-                    array[i] = 1;
-            console.log(array[i]);
-            console.log(array);
+        }
+        //player has to choose the value of the ace to be 1 or 11 using 2 buttons
+        else if (array[i] == 'ACE') {
+            document.getElementById("aceButtons").style.visibility = "visible";
+            document.getElementById("one").addEventListener("click", function one() {
+                for (var i = 0; i < array.length; i++) {
+                    if (array[i] == 'ACE')
+                        array[i] = 1;
+                }
+                document.getElementById("aceButtons").style.visibility = "hidden";
+                console.log(array[i]);
+                console.log(array);
             });
-            document.getElementById("eleven").addEventListener("click", function eleven(){
-                for (var i = 0; i < array.length; i++)
-                if (array[i] == 'ACE')
-                    array[i] = 11;
-
-            console.log(array[i]);
-            console.log(playerCards);
+            document.getElementById("eleven").addEventListener("click", function eleven() {
+                for (var i = 0; i < array.length; i++) {
+                    if (array[i] == 'ACE')
+                        array[i] = 11;
+                }
+                document.getElementById("aceButtons").style.visibility = "hidden";
+                console.log(array[i]);
+                console.log(playerCards);
             });
-
-        } else  if (dealerCards[i] == 'ACE'){
-            if (array.length = 2){
-                dealerCards[i]=11;
+        }
+        //changing the dealers ace values
+        else if (dealerCards[i] == 'ACE') {
+            if (array.length = 2) {
+                dealerCards[i] = 11;
             } else {
-                dealerCards[i]=1;
+                dealerCards[i] = 1;
             }
-
-        } else {
-            array[i] = array[i];
-            console.log(array[i]);
         }
     }
 }
-function score(){
+//function to calcutale the score for the player and the dealer
+function score() {
     var length = playerCards.length;
-    for(var i=0; i<length;i++){
+    for (var i = 0; i < length; i++) {
         playerScore = playerScore + parseInt(playerCards[i]);
-    } 
+    }
     var dealLength = dealerCards.length;
-    for(var i=0; i<dealLength;i++){
+    for (var i = 0; i < dealLength; i++) {
         dealerScore = dealerScore + parseInt(dealerCards[i]);
-    } 
-    if (dealerScore <17){
+    }
+    if (dealerScore < 17) {
         hitDealer();
     }
     console.log(playerScore);
     console.log(dealerScore);
 }
-
-function uitslag(){
+// function for the result
+function uitslag() {
     playerScore = 0;
     dealerScore = 0;
 

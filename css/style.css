@@ -34,7 +34,7 @@ h4{
     display: flex;
 }
 /* button styling */
-.main-buttons{
+.mainButtons{
     display: inline;
 }
 .button{
@@ -51,7 +51,7 @@ h4{
     background-color: white;
 }
 /* buttons for assigning ace values */
-.ace-buttons{
+.aceButtons{
     text-align: center;
 }
 .buttonAce{
