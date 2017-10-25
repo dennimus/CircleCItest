@@ -8,6 +8,15 @@ window.addEventListener("load", init);
 function init() {
 
 }
+// window.onload = function(){
+//     var scoreplayer = localStorage.getItem(scoreplayer);
+//     // if (scoreplayer != null) {
+//     //     scoreplayer = 1000;
+//     // } else {
+//     //     scoreplayer = scoreplayer;
+//     // }
+    
+// }
 var deckID = null;
 var value = 'ACE';
 var playerCards = [];
@@ -29,6 +38,7 @@ function generateDeck(){
             console.log(resultData);
             drawDealer();
             drawCards();
+            console.log(scoreplayer);
 
 
         })
@@ -130,15 +140,28 @@ function checkValues(array){
             console.log(array[i]);
         } else  if (array[i] == 'ACE'){
             document.getElementById("one").addEventListener("click", function one(){
-            array[i-1] = 1;
+                for (var i = 0; i < array.length; i++)
+                if (array[i] == 'ACE')
+                    array[i] = 1;
             console.log(array[i]);
-            console.log(playerCards);
+            console.log(array);
             });
             document.getElementById("eleven").addEventListener("click", function eleven(){
-                array[i-1] = 11;
+                for (var i = 0; i < array.length; i++)
+                if (array[i] == 'ACE')
+                    array[i] = 11;
+
             console.log(array[i]);
             console.log(playerCards);
             });
+
+        } else  if (dealerCards[i] == 'ACE'){
+            if (array.length = 2){
+                dealerCards[i]=11;
+            } else {
+                dealerCards[i]=1;
+            }
+
         } else {
             array[i] = array[i];
             console.log(array[i]);
@@ -154,7 +177,7 @@ function score(){
     for(var i=0; i<dealLength;i++){
         dealerScore = dealerScore + parseInt(dealerCards[i]);
     } 
-    if (dealerScore <18){
+    if (dealerScore <17){
         hitDealer();
     }
     console.log(playerScore);
@@ -169,14 +192,24 @@ function uitslag(){
     console.log(dealerScore);
     if((playerScore == 21 && playerScore != dealerScore)||(playerScore>dealerScore && playerScore<22)||(dealerScore>22 && playerScore<22)){
         window.alert("Je hebt gewonnen");
+
+        scoreplayer +=100;
+        console.log(scoreplayer);
         location.reload();
     }
     else if (playerScore > 21 || (playerScore < dealerScore)&& dealerScore < 22){
         window.alert("Je hebt verloren");
+        scoreplayer -=100;
+
+        console.log(scoreplayer);
         location.reload();
     } 
     else if (playerScore==dealerScore){
         window.alert("gelijkspel");
+
+        console.log(scoreplayer);
         location.reload();
+        
     }
+
 }

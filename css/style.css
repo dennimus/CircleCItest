@@ -12,10 +12,17 @@ h1{
     font-size: 4em;
     text-align: center;
 }
-
+h2{
+    font-size: 2em;
+    color: white;
+}
 h3{
     color: rgb(255, 251, 0);
     margin: 0px;
+    font-size: 2em;
+}
+h4{
+    color: rgb(255, 251, 0);
     font-size: 2em;
 }
 /* styling for classes */
@@ -50,7 +57,7 @@ h3{
 .buttonAce{
     width: 10%;
     height: 5vh;
-    font-size: 1.5em;
+    font-size: 1em;
     text-align: center;
     border: 2px solid black;
     background-color: black;
