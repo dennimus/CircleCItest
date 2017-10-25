@@ -213,6 +213,10 @@ function scores() {
     (playerScore > 21 && dealerScore > 21)
   ) {
     window.alert("Draw!");
+  } else{
+    console.log(playerScore);
+    console.log(dealerScore);
+    window.alert("error");
   }
   localStorage.setItem("scoreplayer", scoreplayer);
   endgame();
