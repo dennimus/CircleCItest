@@ -8,15 +8,7 @@ window.addEventListener("load", init);
 function init() {
 
 }
-// window.onload = function(){
-//     var scoreplayer = localStorage.getItem(scoreplayer);
-//     // if (scoreplayer != null) {
-//     //     scoreplayer = 1000;
-//     // } else {
-//     //     scoreplayer = scoreplayer;
-//     // }
-    
-// }
+
 var deckID = null;
 var value = 'ACE';
 var playerCards = [];
@@ -25,8 +17,13 @@ var hitme = 0;
 var dealme = 0;
 var dealerScore = 0;
 var playerScore = 0;
+var scoreplayer = localStorage.getItem("scoreplayer");
+if (scoreplayer == null){
+    var scoreplayer = 1000;
+} 
 
 
+document.getElementById("score").innerHTML = scoreplayer;
 document.getElementById("deck").addEventListener("click", generateDeck);
 document.getElementById("hit").addEventListener("click", hitCard);
 document.getElementById("uitslag").addEventListener("click", uitslag);
@@ -38,7 +35,6 @@ function generateDeck(){
             console.log(resultData);
             drawDealer();
             drawCards();
-            console.log(scoreplayer);
 
 
         })
@@ -187,29 +183,33 @@ function score(){
 function uitslag(){
     playerScore = 0;
     dealerScore = 0;
+
+
     score();
     console.log(playerScore);
     console.log(dealerScore);
     if((playerScore == 21 && playerScore != dealerScore)||(playerScore>dealerScore && playerScore<22)||(dealerScore>22 && playerScore<22)){
-        window.alert("Je hebt gewonnen");
-
-        scoreplayer +=100;
+        window.alert("You won!");
+        scoreplayer -= -100;
         console.log(scoreplayer);
-        location.reload();
-    }
-    else if (playerScore > 21 || (playerScore < dealerScore)&& dealerScore < 22){
-        window.alert("Je hebt verloren");
-        scoreplayer -=100;
-
-        console.log(scoreplayer);
-        location.reload();
-    } 
-    else if (playerScore==dealerScore){
-        window.alert("gelijkspel");
-
-        console.log(scoreplayer);
-        location.reload();
         
     }
+    else if (playerScore > 21 || (playerScore < dealerScore)&& dealerScore < 22){
+        window.alert("You lost!");
+        scoreplayer -=100;
+        console.log(scoreplayer);
+        
+    } 
+    else if (playerScore==dealerScore){
+        window.alert("Draw!");
+        console.log(scoreplayer);
+        
+    }
+    localStorage.setItem("scoreplayer",scoreplayer);
 
+    endgame();
+
+}
+function endgame(){
+    location.reload();
 }
