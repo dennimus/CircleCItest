@@ -17,6 +17,9 @@ jobs:
       - run:
           name: Install npm wee
           command: npm install
+      - run:
+          name: Install cross-env
+          command: npm install cross-env          
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
